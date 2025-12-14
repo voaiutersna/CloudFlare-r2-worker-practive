@@ -29,6 +29,10 @@ app.get('/', (c)=>{
 	)
 })
 
+app.get('/health',(c)=>{
+	return c.text("Connect cloudflare")
+})
+
 app.route('/image',img)
 
 export default app
