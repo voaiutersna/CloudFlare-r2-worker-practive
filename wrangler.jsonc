@@ -44,7 +44,7 @@
 		{
 			"binding": "r2", //name for calling
 			"bucket_name": "test-bucket", //name of bucket at cloudflare
-			"remote": false //true if want to test on production
+			"remote": true //true if want to test on production
 		},
 	]
 }
