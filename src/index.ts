@@ -21,8 +21,16 @@
  */
 import img from "./route/img"
 import { Hono } from 'hono'
+import { cors } from "hono/cors"
 const app = new Hono()
-
+app.use(cors({
+	origin: ["https://cloudflare-frontend-sigma.vercel.app","http://localhost:8787"],
+	allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowHeaders: [
+      "Content-Type",
+      "Authorization",
+    ],
+}))
 app.get('/', (c)=>{
 	return(
 		c.json({message:"Hello HONO"})
