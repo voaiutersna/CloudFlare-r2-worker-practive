@@ -95,4 +95,37 @@ app.post('/upload',protectUpload, async (c) =>{
     }
 })
 
+app.post('/upload-protected', protectUpload, async (c) => {
+    try {
+        const body = await c.req.parseBody();
+        const file = body["image"] as File;
+
+        if (!file) {
+            return c.json(
+                { success: false, message: "No file provided" },
+                400
+            );
+        }
+
+        const key = `${Date.now()}-${file.name}`;
+
+        await c.env.r2.put(key, file, {
+            httpMetadata: {
+                contentType: file.type,
+            },
+        });
+
+        return c.json({
+            success: true,
+            file: { key, name: file.name, size: file.size },
+        });
+
+    } catch (error: any) {
+        return c.json(
+            { success: false, message: "Upload failed", error: error.message },
+            500
+        );
+    }
+});
+
 export default app

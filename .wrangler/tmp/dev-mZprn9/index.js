@@ -328,10 +328,10 @@ var init_event_streams = __esm({
   }
 });
 
-// .wrangler/tmp/bundle-3V6qAl/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-5brgbJ/middleware-loader.entry.ts
 init_modules_watch_stub();
 
-// .wrangler/tmp/bundle-3V6qAl/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-5brgbJ/middleware-insertion-facade.js
 init_modules_watch_stub();
 
 // src/index.ts
@@ -19243,6 +19243,33 @@ app.post("/upload", protectUpload, async (c2) => {
     return c2.json({ message: "Error from upload-api" });
   }
 });
+app.post("/upload-protected", protectUpload, async (c2) => {
+  try {
+    const body = await c2.req.parseBody();
+    const file = body["image"];
+    if (!file) {
+      return c2.json(
+        { success: false, message: "No file provided" },
+        400
+      );
+    }
+    const key = `${Date.now()}-${file.name}`;
+    await c2.env.r2.put(key, file, {
+      httpMetadata: {
+        contentType: file.type
+      }
+    });
+    return c2.json({
+      success: true,
+      file: { key, name: file.name, size: file.size }
+    });
+  } catch (error) {
+    return c2.json(
+      { success: false, message: "Upload failed", error: error.message },
+      500
+    );
+  }
+});
 var img_default = app;
 
 // node_modules/hono/dist/middleware/cors/index.js
@@ -19394,7 +19421,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// .wrangler/tmp/bundle-3V6qAl/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-5brgbJ/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -19427,7 +19454,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-3V6qAl/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-5brgbJ/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

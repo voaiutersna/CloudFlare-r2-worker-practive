@@ -29,3 +29,6 @@ How to connect R2?
 
 .r2.dev คือ Public URL สำหรับเข้าถึงไฟล์ใน Cloudflare R2 โดยตรง
 //https://pub-xxxxxxxxxxxxxxxxxxx.r2.dev
+
+S3 depend
+bun add @aws-sdk/client-s3
