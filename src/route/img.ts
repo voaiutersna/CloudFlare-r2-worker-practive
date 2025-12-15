@@ -95,7 +95,7 @@ app.post('/upload',protectUpload, async (c) =>{
     }
 })
 
-app.post('/upload-protected', async (c) => {
+app.post('/upload-protected',protectUpload, async (c) => {
     console.log("upload-protected , working")
     try {
         const body = await c.req.parseBody();
