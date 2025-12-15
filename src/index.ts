@@ -24,7 +24,7 @@ import { Hono } from 'hono'
 import { cors } from "hono/cors"
 const app = new Hono()
 app.use(cors({
-	origin: ["https://cloudflare-frontend-sigma.vercel.app","http://localhost:8787"],
+	origin: ["https://cloudflare-frontend-sigma.vercel.app","http://localhost:8787","http://localhost:3000/cloudflare/simple-upload","http://localhost:3000"],
 	allowMethods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowHeaders: [
       "Content-Type",
