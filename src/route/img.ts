@@ -95,7 +95,8 @@ app.post('/upload',protectUpload, async (c) =>{
     }
 })
 
-app.post('/upload-protected', protectUpload, async (c) => {
+app.post('/upload-protected', async (c) => {
+    console.log("upload-protected , working")
     try {
         const body = await c.req.parseBody();
         const file = body["image"] as File;
@@ -109,11 +110,7 @@ app.post('/upload-protected', protectUpload, async (c) => {
 
         const key = `${Date.now()}-${file.name}`;
 
-        await c.env.r2.put(key, file, {
-            httpMetadata: {
-                contentType: file.type,
-            },
-        });
+        await c.env.r2.put(key, file);
 
         return c.json({
             success: true,
